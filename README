@@ -1,0 +1,10 @@
+Replicate Folder Structure
+
+This program should replicate a given folder structure recursively.
+It should create any given folder structure recursively, without the files,
+and put it on a desired location.
+
+Progress:
+
+20111120
+The project is not started.
