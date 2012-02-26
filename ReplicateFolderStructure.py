@@ -1,12 +1,15 @@
+#coding=UTF-8
 import os
 import sys
 
 print (os.getcwd())
 
+#TODO: Lï¿½gg dessa i en config?
 replicateFolderStructureQuestion = "Are you sure you want to replicate the cwd structure recursively?"
 defaultAnswerToReplicateFolderStructureQuery = "no"
 defaultReplicationDestinationDirectory = "/ReplicatedFolderStructure"
 defaultWindowsRootFolder = "/"
+
 
 def QueryYesNo(question, default="no"):
     valid = {"yes": True, "y": True, "Y":True, "YES":True, "Yes":True, 
@@ -21,7 +24,7 @@ def QueryYesNo(question, default="no"):
         raise ValueError("Invalid default answer: '%S'" % default)
         
     while True:
-        sys.stdout.write(replicateFolderStructureQuestion + prompt)
+        sys.stdout.write(question + prompt)
         choice = input().lower()
         if default is not None and choice == '':
             return valid[default]
@@ -30,21 +33,29 @@ def QueryYesNo(question, default="no"):
         else:
             sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
 
-if QueryYesNo(replicateFolderStructureQuestion, defaultAnswerToReplicateFolderStructureQuery):
-    #TODO: Kontrollera att den nya root-katalogen inte finns, 
-    #TODO: om den inte redan finns - fortsätt till själva replikeringen (skapa inte mappen förrän replikeringen gick bra!)
-    #TODO: om den redan finns - avsluta programmet
-    os.mkdir(defaultReplicationDestinationDirectory)
-    os.chdir("/test/FolderToBeReplicated") #TODO: Byt detta statement till os.chdir(defaultReplicationFolder)
-    print("Replicating folder structure in ", os.getcwd, " recursively.")
-    print("You will find the root of the replicated folder structure here:\n", defaultReplicationDestinationDirectory)
-    #TODO: starta replikeringen (skapa en lista (eller nåt) över mappstrukturen genom att först TESTA att det ens är möjligt med os.access)
-        #TODO: kolla upp os.walk()!
-    #TODO: skapa replikan i defaultReplicationDestinationDirectory (använd listan som skapades)
-    
-     
-else:
-    print("Terminating program.")    
+try:
+    if QueryYesNo(replicateFolderStructureQuestion, defaultAnswerToReplicateFolderStructureQuery):
+        #TODO: Kontrollera att den nya root-katalogen inte finns, 
+        #TODO: om den inte redan finns - fortsï¿½tt till sjï¿½lva replikeringen (skapa inte mappen fï¿½rrï¿½n replikeringen gick bra!)
+        #TODO: om den redan finns - avsluta programmet
+        os.mkdir(defaultReplicationDestinationDirectory)
+        os.chdir("/test/FolderToBeReplicated") #TODO: Byt detta statement till os.chdir(defaultReplicationFolder)
+        print("Replicating folder structure in", os.getcwd(), " recursively.")
+        print("You will find the root of the replicated folder structure here:\n", defaultReplicationDestinationDirectory)
+        #TODO: starta replikeringen (skapa en lista (eller nï¿½t) ï¿½ver mappstrukturen genom att fï¿½rst TESTA att det ens ï¿½r mï¿½jligt med os.access)
+            #TODO: kolla upp os.walk()!
+        #TODO: skapa replikan i defaultReplicationDestinationDirectory (anvï¿½nd listan som skapades)
+        
+    else:
+        print("Terminating program.")    
+
+except:
+    print("Something went wrong")
+
+finally:
+    #Test:
+    os.removedirs(defaultReplicationDestinationDirectory)
+    print("Test: removed defaultReplicationDestinationDirectory")
 
 
 
