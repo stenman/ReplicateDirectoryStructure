@@ -11,12 +11,14 @@ defaultReplicationDestinationDirectory = "/ReplicatedFolderStructure"
 defaultWindowsRootFolder = "/"
 
 #Create a platform independent ClearScreen-function
+#TODO: Only for test (unless running program from shell)
 if sys.platform.startswith("win"):
 	def ClearScreen():
-		subprocess.call(["cmd.exe", "/C", "cls"])
+		# Use only if not running from shell
+		os.system("cls")
 else:
 	def ClearScreen():
-		subprocess.call(["clear"])
+		os.system("clear")
 
 def QueryYesNo(question, default="no"):
 	ClearScreen()
@@ -41,29 +43,38 @@ def QueryYesNo(question, default="no"):
 		else:
 			sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
 
-try:
-	if QueryYesNo(replicateFolderStructureQuestion, defaultAnswerToReplicateFolderStructureQuery):
-        #TODO: Kontrollera att den nya root-katalogen inte finns, 
-        #TODO: om den inte redan finns - forts�tt till sj�lva replikeringen (skapa inte mappen f�rr�n replikeringen gick bra!)
-        #TODO: om den redan finns - avsluta programmet
-		os.mkdir(defaultReplicationDestinationDirectory)
-		os.chdir("/test/FolderToBeReplicated") #TODO: Byt detta statement till os.chdir(defaultReplicationFolder)
-		print("Replicating folder structure in", os.getcwd(), " recursively.\n")
-		print("You will find the root of the replicated folder structure here:\n", defaultReplicationDestinationDirectory)
-        #TODO: starta replikeringen (skapa en lista (eller n�t) �ver mappstrukturen genom att f�rst TESTA att det ens �r m�jligt med os.access)
-        #TODO: kolla upp os.walk()!
-        #TODO: skapa replikan i defaultReplicationDestinationDirectory (anv�nd listan som skapades)
-        
-	else:
-		print("Terminating program.")    
 
-except:
-	print("Something went wrong")
+def main():
+	try:
+		if QueryYesNo(replicateFolderStructureQuestion, defaultAnswerToReplicateFolderStructureQuery):
+			#TODO: Kontrollera att den nya root-katalogen inte finns, 
+			#TODO: om den inte redan finns - forts�tt till sj�lva replikeringen (skapa inte mappen f�rr�n replikeringen gick bra!)
+			#TODO: om den redan finns - avsluta programmet
+			print("1.4")
+			os.mkdir(defaultReplicationDestinationDirectory)
+			os.chdir("/test/FolderToBeReplicated") #TODO: Byt detta statement till os.chdir(defaultReplicationFolder)
+			print("Replicating folder structure in", os.getcwd(), " recursively.\n")
+			print("You will find the root of the replicated folder structure here:\n", defaultReplicationDestinationDirectory)
+			#TODO: starta replikeringen (skapa en lista (eller n�t) �ver mappstrukturen genom att f�rst TESTA att det ens �r m�jligt med os.access)
+			#TODO: kolla upp os.walk()!
+			#TODO: skapa replikan i defaultReplicationDestinationDirectory (anv�nd listan som skapades)
+			
+		else:
+			print("Terminating program.")
+			sys.exit(0)
 
-finally:
-    #Test:
-	os.removedirs(defaultReplicationDestinationDirectory)
-	print("Test: removed defaultReplicationDestinationDirectory")
-
+	except Exception as error:
+		print("1An unexpected exception was encountered: %s", str(error))
+		sys.exit(1)
+		
+	finally:
+		#Test:
+		if os.path.isdir(defaultReplicationDestinationDirectory):
+			os.removedirs(defaultReplicationDestinationDirectory)
+			print("Test: removed defaultReplicationDestinationDirectory")
+		sys.exit(1)
+	
+if __name__ == "__main__":
+	main()
 
 
