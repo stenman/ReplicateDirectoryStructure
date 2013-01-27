@@ -11,6 +11,8 @@ folderToBeReplicated = "/test/FolderToBeReplicated"
 defaultReplicationDestinationDirectory = "/ReplicatedFolderStructure"
 defaultWindowsRootFolder = "/"
 
+#Temporary test commit comment 1
+
 #Create a platform independent ClearScreen-function
 #TODO: Only for test (unless running program from shell)
 if sys.platform.startswith("win"):
