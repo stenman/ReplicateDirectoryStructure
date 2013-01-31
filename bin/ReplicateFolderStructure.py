@@ -5,6 +5,8 @@ import sys
 print (os.getcwd())
 
 #TODO: L�gg dessa i en config?
+errorMessageDirectoryAlreadyExists = "The destination directory you want to replicate to already exist!"
+errorMessageFolderToBeReplicatedDoesNotExist = "The folder you want to replicate does not exist!"
 replicateFolderStructureQuestion = "Are you sure you want to replicate the cwd structure recursively?"
 defaultAnswerToReplicateFolderStructureQuery = "no"
 folderToBeReplicated = "/test/FolderToBeReplicated"
@@ -50,20 +52,22 @@ def QueryYesNo(question, default="no"):
 def main():
 	try:
 		if QueryYesNo(replicateFolderStructureQuestion, defaultAnswerToReplicateFolderStructureQuery):
-			if os.path.isdir(defaultReplicationDestinationDirectory):
-				raise OSError("The destination directory you want to replicate to already exist!")
-			if not os.path.isdir(folderToBeReplicated):
-				raise OSError("The folder you want to replicate does not exist!")
-			#TODO: starta replikeringen (skapa en lista (eller n�t) �ver mappstrukturen genom att f�rst TESTA att det ens �r m�jligt med os.access)
+			
+			#Verify directory existences
+			checkDir()
+			
+			#TODO: TESTA att en återskapning av folderstrukturen är möjlig med os.access
+			testDirectoryAccess()
+			
+			#TODO: starta replikeringen (skapa en lista (eller n�t) �ver mappstrukturen)
 			#TODO: kolla upp os.walk()!
+			createFolderList()
 			
 			os.chdir(folderToBeReplicated)
-			
 			os.mkdir(defaultReplicationDestinationDirectory)
-			print("\nReplicating folder structure in", os.getcwd(), "recursively.")
-			print("\nYou will find the root of the replicated folder structure here:\n", defaultReplicationDestinationDirectory, "\n")
+
 			#TODO: skapa replikan i defaultReplicationDestinationDirectory (anv�nd listan som skapades)
-			
+			replicateFolderStructure()
 		else:
 			print("\nTerminating program.")
 			sys.exit(0)
@@ -82,7 +86,24 @@ def main():
 			os.removedirs(defaultReplicationDestinationDirectory)
 			print("Test: removed defaultReplicationDestinationDirectory")
 		sys.exit(1)
+
+def checkDir():
+	if os.path.isdir(defaultReplicationDestinationDirectory):
+		raise OSError(errorMessageDirectoryAlreadyExists)
+	if not os.path.isdir(folderToBeReplicated):
+		raise OSError(errorMessageFolderToBeReplicatedDoesNotExist)
 	
+def testDirectoryAccess():
+	print("method not yet defined")
+
+def createFolderList():
+	print("method not yet defined")
+
+def replicateFolderStructure():
+	print("\nReplicating folder structure in", os.getcwd(), "recursively.")
+	print("\nYou will find the root of the replicated folder structure here:\n", defaultReplicationDestinationDirectory, "\n")
+	print("method not yet defined")
+
 if __name__ == "__main__":
 	main()
 
