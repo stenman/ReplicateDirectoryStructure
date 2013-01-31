@@ -1,12 +1,13 @@
 ﻿#coding=UTF-8
 import os
 import sys
+import UserDialogue
 
 print (os.getcwd())
 
 #TODO: L�gg dessa i en config?
-errorMessageDirectoryAlreadyExists = "The destination directory you want to replicate to already exist!"
-errorMessageFolderToBeReplicatedDoesNotExist = "The folder you want to replicate does not exist!"
+error_message_directory_already_exists = "The destination directory you want to replicate to already exist!"
+error_message_folder_to_be_replicated_does_not_exist = "The folder you want to replicate does not exist!"
 replicateFolderStructureQuestion = "Are you sure you want to replicate the cwd structure recursively?"
 defaultAnswerToReplicateFolderStructureQuery = "no"
 folderToBeReplicated = "/test/FolderToBeReplicated"
@@ -15,43 +16,27 @@ defaultWindowsRootFolder = "/"
 
 #Temporary test commit comment 1
 
-#Create a platform independent ClearScreen-function
-#TODO: Only for test (unless running program from shell)
-if sys.platform.startswith("win"):
-	def ClearScreen():
-		# Use only if not running from shell
-		os.system("cls")
-else:
-	def ClearScreen():
-		os.system("clear")
+def checkDir():
+	if os.path.isdir(defaultReplicationDestinationDirectory):
+		raise OSError(error_message_directory_already_exists)
+	if not os.path.isdir(folderToBeReplicated):
+		raise OSError(error_message_folder_to_be_replicated_does_not_exist)
+	
+def testDirectoryAccess():
+	print("method not yet defined")
 
-def QueryYesNo(question, default="no"):
-	ClearScreen()
-	valid = {"yes": True, "y": True, "Y":True, "YES":True, "Yes":True, "no":False, "n":False, "N":False, "NO":False, "No":False}
-	if default == None:
-		prompt = " [y/n]: "
-	elif default == "yes":
-		prompt = " [Y/n]: "
-	elif default == "no":
-		prompt = " [y/N]: "
-	else:
-		raise ValueError("Invalid default answer: '%S'" % default)
+def createFolderList():
+	print("method not yet defined")
 
-	while True:
-		sys.stdout.write(question + prompt)
-		#.rstrip('\r') is a fix to a bug in Python, causing a trailing '\r' in the resulting string
-		choice = input().lower().rstrip('\r')
-		if default is not None and choice == '':
-			return valid[default]
-		elif choice in valid:
-			return valid[choice]
-		else:
-			sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
-
-
+def replicateFolderStructure():
+	print("\nReplicating folder structure in", os.getcwd(), "recursively.")
+	print("\nYou will find the root of the replicated folder structure here:\n", defaultReplicationDestinationDirectory, "\n")
+	print("method not yet defined")
+	
 def main():
 	try:
-		if QueryYesNo(replicateFolderStructureQuestion, defaultAnswerToReplicateFolderStructureQuery):
+		userDialogue = UserDialogue.UserDialogue()
+		if userDialogue.QueryYesNo(replicateFolderStructureQuestion, defaultAnswerToReplicateFolderStructureQuery):
 			
 			#Verify directory existences
 			checkDir()
@@ -86,23 +71,6 @@ def main():
 			os.removedirs(defaultReplicationDestinationDirectory)
 			print("Test: removed defaultReplicationDestinationDirectory")
 		sys.exit(1)
-
-def checkDir():
-	if os.path.isdir(defaultReplicationDestinationDirectory):
-		raise OSError(errorMessageDirectoryAlreadyExists)
-	if not os.path.isdir(folderToBeReplicated):
-		raise OSError(errorMessageFolderToBeReplicatedDoesNotExist)
-	
-def testDirectoryAccess():
-	print("method not yet defined")
-
-def createFolderList():
-	print("method not yet defined")
-
-def replicateFolderStructure():
-	print("\nReplicating folder structure in", os.getcwd(), "recursively.")
-	print("\nYou will find the root of the replicated folder structure here:\n", defaultReplicationDestinationDirectory, "\n")
-	print("method not yet defined")
 
 if __name__ == "__main__":
 	main()
