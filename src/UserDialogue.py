@@ -12,16 +12,17 @@ class UserDialogue(object):
     '''
 
     def __init__(self):
-        #Create a platform independent clear_screen-function
-        #TODO: Only for test (unless running program from shell)
+        self
+        
+    #TODO: Only for test (unless running program from shell)
+    #Creates a platform independent clear_screen-function
+    def clear_screen(self):
         if sys.platform.startswith("win"):
-            def clear_screen(self):
-        # Use only if not running from shell
-                os.system("cls")
+            os.system("cls")
         else:
-            def clear_screen(self):
-                os.system("clear")
+            os.system("clear")
 
+    #Safe input dialogue: yes/no
     def QueryYesNo(self, question, default="no"):
         self.clear_screen()
         valid = {"yes": True, "y": True, "Y":True, "YES":True, "Yes":True, "no":False, "n":False, "N":False, "NO":False, "No":False}
@@ -44,6 +45,4 @@ class UserDialogue(object):
                 return valid[choice]
             else:
                 sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
-                
 
-        
