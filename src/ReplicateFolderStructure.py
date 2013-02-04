@@ -27,12 +27,16 @@ def check_dir():
     if not os.path.isdir(directory_to_be_replicated):
         raise OSError(error_message_directory_to_be_replicated_does_not_exist)
     
+#TODO: Make sure that a replication of the directory structure is possible, use os.access
 def test_directory_access():
     print("method not yet defined")
 
+#TODO: start the replication. Eg. - create a list over the directory structure.
+#TODO: check out os.walk()!
 def create_directory_list():
     print("method not yet defined")
 
+#TODO: create the replication in default_replication_destination_directory (use the above mentioned list)
 def replicate_directory_structure():
     print("\nReplicating directory structure in", os.getcwd(), "recursively.")
     print("\nYou will find the root of the replicated directory structure here:\n", default_replication_destination_directory, "\n")
@@ -46,17 +50,13 @@ def main():
             #Verify directory existences
             check_dir()
             
-            #TODO: Make sure that a replication of the directory structure is possible, use os.access
             test_directory_access()
             
-            #TODO: start the replication. Eg. - create a list over the directory structure.
-            #TODO: check out os.walk()!
             create_directory_list()
             
             os.chdir(directory_to_be_replicated)
             os.mkdir(default_replication_destination_directory)
 
-            #TODO: create the replication in default_replication_destination_directory (use the above mentioned list)
             replicate_directory_structure()
         else:
             print("\nTerminating program.")
