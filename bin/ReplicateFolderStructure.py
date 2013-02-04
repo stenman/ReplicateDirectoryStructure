@@ -29,6 +29,7 @@ def check_dir():
     
 #TODO: Make sure that a replication of the directory structure is possible, use os.access
 def test_directory_access():
+    #TODO: try shutil.copytree
     print("method not yet defined")
 
 #TODO: start the replication. Eg. - create a list over the directory structure.
