@@ -7,6 +7,7 @@ Created on 3 feb 2013
 import os
 import sys
 import UserDialogue
+import shutil
 
 print (os.getcwd())
 
@@ -42,42 +43,71 @@ def replicate_directory_structure():
     print("\nReplicating directory structure in", os.getcwd(), "recursively.")
     print("\nYou will find the root of the replicated directory structure here:\n", default_replication_destination_directory, "\n")
     print("method not yet defined")
+
+def ignored_files(adir,filenames):
+    
+    #TODO: The file in the root dir och the folder to be copied is still copied. Fix this!
+    
+    for filename in os.listdir(adir):
+        print("adir: "+adir)
+        print("file: "+filename)
+        if os.path.isfile(adir+"/"+filename):
+            return filename
+        else:
+            #TODO: See if there's a better way of returning nothing (NoneType does not work!)
+            return ":"
+
+#    for filename in filenames:
+##        print("adir: "+adir)
+##        print("filename: "+filename)
+##        print("adir/filename: "+adir+"/"+filename)
+#        if os.path.isdir(adir+"/"+filename):
+#            print("breaking loop!")
+#            #TODO: See if there's a better way of returning nothing (NoneType does not work!)
+#            return ":"
+#        return filename
     
 def main():
-    try:
-        user_dialogue = UserDialogue.UserDialogue()
-        if user_dialogue.query_yes_or_no(question_replicate_directory_structure, default_answer_to_replicate_directory_structure_query):
-            
-            #Verify directory existences
-            check_dir()
-            
-            test_directory_access()
-            
-            create_directory_list()
-            
-            os.chdir(directory_to_be_replicated)
-            os.mkdir(default_replication_destination_directory)
+    source_folder = "c:/test/a"
+    destination_folder = "c:/test/b"
 
-            replicate_directory_structure()
-        else:
-            print("\nTerminating program.")
-            sys.exit(0)
-
-    except OSError as error:
-        print("\nOSError: %s" % str(error))
-        sys.exit(1)
-
-    except Exception as error:
-        print("\nAn unexpected exception was encountered: %s" % str(error))
-        sys.exit(1)
-
-    finally:
-        #TODO: Test (remove me start)
-        if os.path.isdir(default_replication_destination_directory):
-            os.removedirs(default_replication_destination_directory)
-            print("Test: removed default_replication_destination_directory")
-        #TODO: Test (remove me end)
-        sys.exit(1)
+    shutil.copytree(source_folder, destination_folder, ignore=ignored_files)
+    print("done")
+    
+#    try:
+#        user_dialogue = UserDialogue.UserDialogue()
+#        if user_dialogue.query_yes_or_no(question_replicate_directory_structure, default_answer_to_replicate_directory_structure_query):
+#            
+#            #Verify directory existences
+#            check_dir()
+#            
+#            test_directory_access()
+#            
+#            create_directory_list()
+#            
+#            os.chdir(directory_to_be_replicated)
+#            os.mkdir(default_replication_destination_directory)
+#
+#            replicate_directory_structure()
+#        else:
+#            print("\nTerminating program.")
+#            sys.exit(0)
+#
+#    except OSError as error:
+#        print("\nOSError: %s" % str(error))
+#        sys.exit(1)
+#
+#    except Exception as error:
+#        print("\nAn unexpected exception was encountered: %s" % str(error))
+#        sys.exit(1)
+#
+#    finally:
+#        #TODO: Test (remove me start)
+#        if os.path.isdir(default_replication_destination_directory):
+#            os.removedirs(default_replication_destination_directory)
+#            print("Test: removed default_replication_destination_directory")
+#        #TODO: Test (remove me end)
+#        sys.exit(1)
 
 if __name__ == "__main__":
     main()
