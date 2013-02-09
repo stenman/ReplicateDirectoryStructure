@@ -22,92 +22,56 @@ directory_to_be_replicated = "/test/DirectoryToBeReplicated"
 default_replication_destination_directory = "/ReplicatedDirectoryStructure"
 default_root_directory_windows = "/"
 
-def check_dir():
-    if os.path.isdir(default_replication_destination_directory):
+def check_destination_dir(dir):
+    if os.path.isdir(dir):
         raise OSError(error_message_directory_already_exists)
-    if not os.path.isdir(directory_to_be_replicated):
+
+def check_source_dir(dir):
+    if not os.path.isdir(dir):
         raise OSError(error_message_directory_to_be_replicated_does_not_exist)
     
-#TODO: Make sure that a replication of the directory structure is possible, use os.access
+#TODO: Make sure that a replication of the directory structure even is possible, use os.access
 def test_directory_access():
-    #TODO: try shutil.copytree
     print("method not yet defined")
 
-#TODO: start the replication. Eg. - create a list over the directory structure.
-#TODO: check out os.walk()!
-def create_directory_list():
-    print("method not yet defined")
-
-#TODO: create the replication in default_replication_destination_directory (use the above mentioned list)
-def replicate_directory_structure():
-    print("\nReplicating directory structure in", os.getcwd(), "recursively.")
-    print("\nYou will find the root of the replicated directory structure here:\n", default_replication_destination_directory, "\n")
-    print("method not yet defined")
+def replicate_directory_structure(src, dst):
+    print("\nReplicating directory structure in "+src+" recursively.")
+    print("\nYou will find the root of the replicated directory structure here:\n"+dst+"\n")
+    #TODO: there should be some error handling here!
+    shutil.copytree(src, dst, ignore=ignored_files)
 
 def ignored_files(adir,filenames):
-    
-    #TODO: The file in the root dir och the folder to be copied is still copied. Fix this!
-    
+    filenames = []
     for filename in os.listdir(adir):
-        print("adir: "+adir)
-        print("file: "+filename)
         if os.path.isfile(adir+"/"+filename):
-            return filename
+            filenames.append(filename)
+            continue
         else:
-            #TODO: See if there's a better way of returning nothing (NoneType does not work!)
-            return ":"
+            continue
+    return filenames
 
-#    for filename in filenames:
-##        print("adir: "+adir)
-##        print("filename: "+filename)
-##        print("adir/filename: "+adir+"/"+filename)
-#        if os.path.isdir(adir+"/"+filename):
-#            print("breaking loop!")
-#            #TODO: See if there's a better way of returning nothing (NoneType does not work!)
-#            return ":"
-#        return filename
-    
 def main():
-    source_folder = "c:/test/a"
-    destination_folder = "c:/test/b"
-
-    shutil.copytree(source_folder, destination_folder, ignore=ignored_files)
-    print("done")
-    
-#    try:
-#        user_dialogue = UserDialogue.UserDialogue()
-#        if user_dialogue.query_yes_or_no(question_replicate_directory_structure, default_answer_to_replicate_directory_structure_query):
-#            
-#            #Verify directory existences
-#            check_dir()
-#            
-#            test_directory_access()
-#            
-#            create_directory_list()
-#            
-#            os.chdir(directory_to_be_replicated)
-#            os.mkdir(default_replication_destination_directory)
-#
-#            replicate_directory_structure()
-#        else:
-#            print("\nTerminating program.")
-#            sys.exit(0)
-#
-#    except OSError as error:
-#        print("\nOSError: %s" % str(error))
-#        sys.exit(1)
-#
-#    except Exception as error:
-#        print("\nAn unexpected exception was encountered: %s" % str(error))
-#        sys.exit(1)
-#
-#    finally:
-#        #TODO: Test (remove me start)
-#        if os.path.isdir(default_replication_destination_directory):
-#            os.removedirs(default_replication_destination_directory)
-#            print("Test: removed default_replication_destination_directory")
-#        #TODO: Test (remove me end)
-#        sys.exit(1)
+    #TODO: make this a user choice!
+    source_directory = "c:/test/a"
+    destination_directory = "c:/test/b"
+    try:
+        user_dialogue = UserDialogue.UserDialogue()
+        if user_dialogue.query_yes_or_no(question_replicate_directory_structure, default_answer_to_replicate_directory_structure_query):
+            check_source_dir(source_directory)
+            check_destination_dir(destination_directory)
+            test_directory_access()
+            replicate_directory_structure(source_directory, destination_directory)
+        else:
+            print("\nTerminating program.")
+            sys.exit(0)
+    except OSError as error:
+        print("\nOSError: %s" % str(error))
+        sys.exit(1)
+    except Exception as error:
+        print("\nAn unexpected exception was encountered: %s" % str(error))
+        sys.exit(1)
+    finally:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
