@@ -14,8 +14,6 @@ class UserDialogue(object):
     def __init__(self):
         self
         
-    #TODO: Only for test (unless running program from shell)
-    #Creates a platform independent clear_screen-function
     def clear_screen(self):
         if sys.platform.startswith("win"):
             os.system("cls")
