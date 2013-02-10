@@ -1,10 +1,13 @@
-Replicate Folder Structure
+Replicate Directory Structure
 
 This program should replicate a given folder structure recursively.
 It should create any given folder structure recursively, without the files,
 and put it on a desired location.
 
 Progress:
+
+2013-02-10
+Almost done. Need some logging and stuff.
 
 2013-02-04
 Found this project laying around. Dusted it off and started coding.
