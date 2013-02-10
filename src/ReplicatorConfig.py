@@ -9,3 +9,4 @@ error_message_directory_already_exists = "The destination directory you want to 
 error_message_directory_to_be_replicated_does_not_exist = "The directory you want to replicate does not exist!"
 question_replicate_directory_structure = "Are you sure you want to replicate this directory structure recursively?"
 default_answer_to_replicate_directory_structure_query = "no"
+program_description="A program that replicates a directory structure in file systems, leaving out any files."

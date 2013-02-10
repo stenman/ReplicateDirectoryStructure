@@ -4,19 +4,20 @@ Created on 3 feb 2013
 @author: Gildur
 '''
 #coding=UTF-8
-import os
 import sys
+import argparse
 import UserDialogue
 import Replicator
 import ReplicatorConfig
 
-print (os.getcwd())
+def main(argv):
+    parser = argparse.ArgumentParser(description=ReplicatorConfig.program_description)
+    parser.add_argument("src", help="Source Directory")
+    parser.add_argument("dst", help="Destination Directory")
+    args = parser.parse_args(argv)
+    replicate_directories(args.src, args.dst)
 
-#TODO: make this directory and location a user choice
-source_directory = "c:/test/a"
-destination_directory = "c:/test/b"
-
-def main():
+def replicate_directories(source_directory, destination_directory):
     try:
         replicator = Replicator.Replicator()
         user_dialogue = UserDialogue.UserDialogue()
@@ -35,6 +36,6 @@ def main():
         sys.exit(1)
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main(sys.argv[1:]))
 
 
