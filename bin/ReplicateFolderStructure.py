@@ -22,11 +22,11 @@ directory_to_be_replicated = "/test/DirectoryToBeReplicated"
 default_replication_destination_directory = "/ReplicatedDirectoryStructure"
 default_root_directory_windows = "/"
 
-def check_destination_dir(dir):
+def check_destination_dir(directory):
     if os.path.isdir(dir):
         raise OSError(error_message_directory_already_exists)
 
-def check_source_dir(dir):
+def check_source_dir(directory):
     if not os.path.isdir(dir):
         raise OSError(error_message_directory_to_be_replicated_does_not_exist)
     
