@@ -24,7 +24,7 @@ class Replicator(object):
     #TODO: Make test cases to check for possible errors while traversing directories. Maybe make a "test_directory_access" function?
         #TODO: Errors found so far:
         #TODO: [Errno 13]: Permission denied. Example: C:\Windows\System32\winevt\Logs\system.evtx
-        #TODO: [WinError 5]: Access Denied. Example: C:\Windows\SysWOW64\com\dmp\*.*
+        #TODO: [WinError 5]: Access Denied. Example: C:\Windows\SysWOW64\config
     #TODO: Create a logging function    
     def replicate(self, src, dst):
         self.check_source_dir(src)
