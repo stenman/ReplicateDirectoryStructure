@@ -4,7 +4,6 @@ Created on 3 feb 2013
 @author: Gildur
 '''
 #coding=UTF-8
-import os
 import sys
 import argparse
 import UserDialogue
