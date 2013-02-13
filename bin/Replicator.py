@@ -16,16 +16,14 @@ class Replicator(object):
     def __init__(self):
         self
     
+    def display_successful_replication_message(self, destination_directory):
+        print("\nDirectory structure replicated to: {0}\n".format(destination_directory))
+
+    
     def replicate_directory_structure(self, src, dst):
-        print("\nReplicating directory structure in "+src+" recursively.")
-        print("\nYou will find the root of the replicated directory structure here:\n"+dst+"\n")
+        print("\nReplicating directory structure in {0} recursively...".format(src))
         shutil.copytree(src, dst, ignore=self.ignored_files)
     
-    #TODO: Make test cases to check for possible errors while traversing directories. Maybe make a "test_directory_access" function?
-        #TODO: Errors found so far:
-        #TODO: [Errno 13]: Permission denied. Example: C:\Windows\System32\winevt\Logs\system.evtx
-        #TODO: [WinError 5]: Access Denied. Example: C:\Windows\SysWOW64\config
-    #TODO: Create a logging function    
     def replicate(self, src, dst):
         self.check_source_dir(src)
         self.check_destination_dir(dst)

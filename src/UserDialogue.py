@@ -14,15 +14,8 @@ class UserDialogue(object):
     def __init__(self):
         self
         
-    def clear_screen(self):
-        if sys.platform.startswith("win"):
-            os.system("cls")
-        else:
-            os.system("clear")
-
     #Safe input dialogue: yes/no
     def query_yes_or_no(self, question, default="no"):
-        self.clear_screen()
         valid = {"yes": True, "y": True, "Y":True, "YES":True, "Yes":True, "no":False, "n":False, "N":False, "NO":False, "No":False}
         if default == None:
             prompt = " [y/n]: "
