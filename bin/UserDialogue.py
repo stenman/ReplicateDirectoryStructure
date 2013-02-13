@@ -4,7 +4,6 @@ Created on 31 jan 2013
 @author: Gildur
 '''
 import sys
-import os
 
 class UserDialogue(object):
     '''
