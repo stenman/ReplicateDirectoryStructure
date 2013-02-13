@@ -17,11 +17,11 @@ class Replicator(object):
         self
     
     def display_successful_replication_message(self, destination_directory):
-        print("\nDirectory structure replicated to: {0}\n".format(destination_directory))
+        print("Directory structure replicated to: {0}\n".format(destination_directory))
 
     
     def replicate_directory_structure(self, src, dst):
-        print("\nReplicating directory structure in {0} recursively...".format(src))
+        print("Replicating directory structure in {0} recursively...\n".format(src))
         shutil.copytree(src, dst, ignore=self.ignored_files)
     
     def replicate(self, src, dst):
